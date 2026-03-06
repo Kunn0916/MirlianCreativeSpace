@@ -1,0 +1,28 @@
+{
+  "artist_name": "Yuna",
+  "brand_name": "My Art Portfolio",
+  "tagline": "Digital illustrations, character art, and personal style.",
+  "bio": "Yuna is a digital artist exploring illustration, animation, and 3D modeling while sharing progress publicly.",
+  "contact_email": "azuradoesart@gmail.com",
+  "social_links": {
+    "tiktok": "https://www.tiktok.com/@mirlian.does.art?_r=1&_t=ZS-92qVh6FIKzV",
+    "vgen": "https://vgen.co/MirlianJay"
+  },
+  "services": [
+    "Digital illustrations",
+    "Character art",
+    "Custom commission work"
+  ],
+  "commission_status": "Open",
+  "faq": [
+    {
+      "question": "How can I contact the artist?",
+      "answer": "Email azuradoesart@gmail.com or message through VGen."
+    },
+    {
+      "question": "Where can I see more works?",
+      "answer": "Check the portfolio gallery on this site and social pages."
+    }
+  ],
+  "notes_for_assistant": "If details are missing, ask user to contact the artist by email."
+}

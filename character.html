@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyArt Character Bio</title>
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fraunces:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles/main.css" />
+</head>
+
+<body class="site-body text-slate-800">
+
+<header class="sticky top-0 z-50 backdrop-blur-xl border-b border-white/40 bg-white/75">
+  <nav class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+
+    <a href="index.html" class="brand text-2xl md:text-3xl">
+      My<span>Char</span>
+    </a>
+
+    <a
+      href="#character-bio"
+      class="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white/90 px-3 py-2 font-semibold text-sm hover:border-slate-400"
+      aria-label="Go to character bio"
+    >
+      <img
+        src="images/logo.png"
+        alt="MyArt logo"
+        class="w-7 h-7 rounded-full object-cover"
+        onerror="this.style.display='none'"
+      />
+      Character Bio
+    </a>
+
+  </nav>
+</header>
+
+<main class="max-w-6xl mx-auto px-4 py-16">
+
+  <section class="surface-panel rounded-2xl p-8 md:p-10 mb-10 text-center animated-card-border">
+    <p class="section-kicker">About Me</p>
+
+    <h1 class="section-title mb-4">MirlianJay</h1>
+
+    <p class="text-slate-700 max-w-2xl mx-auto">
+      Haiii, I’m Mirlian! Your typical digital artist who has love for art.
+      I do both digital and traditional drawing, but I am more prominent when it
+      comes to anything digital 💗 Come and join me on my art journey 🥳
+    </p>
+  </section>
+
+
+  <section id="character-bio" class="surface-panel rounded-2xl p-8 md:p-10 animated-card-border">
+
+    <p class="section-kicker">My Character</p>
+    <h2 class="section-title mb-6">Character Bio</h2>
+
+    <div class="grid md:grid-cols-[220px,1fr] gap-6 items-start">
+
+      <img
+        src="images/character.jpg"
+        alt="Yuna Celestine"
+        class="w-full max-w-[220px] h-[220px] object-cover rounded-2xl border border-slate-200"
+        onerror="this.src='images/profile.jfif'"
+      />
+
+      <div class="text-slate-700 space-y-3">
+
+        <p><strong>Name:</strong> Yuna Celestine</p>
+        <p><strong>Age:</strong> 19</p>
+
+        <p>
+          <strong>Background:</strong>
+          Yuna Celestine grew up in a quiet coastal town where the nights were
+          filled with ocean winds and soft waves. As a child she spent most of
+          her time drawing in sketchbooks and observing the world around her.
+          Because her family moved often, she rarely kept long friendships,
+          which made her imagination become her closest companion.
+        </p>
+
+        <p>
+          Over time, Yuna created entire worlds in her mind inspired by the
+          people she met and the places she visited. She now studies art and
+          spends her days sketching in cafés, parks, and quiet corners of the
+          city. She believes every person has a hidden story waiting to be told,
+          and she tries to capture those emotions in her drawings.
+        </p>
+
+        <p>
+          <strong>Personality:</strong>
+          Yuna is gentle, observant, and quietly playful. She tends to speak
+          softly and prefers peaceful environments over loud crowds. She often
+          notices small details others overlook — expressions, moods, and
+          subtle moments that inspire her art.
+        </p>
+
+        <p>
+          Although calm and dreamy, she has a slightly mischievous side and
+          enjoys teasing close friends in subtle ways. She values creativity,
+          genuine connections, and moments of quiet reflection.
+        </p>
+
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<script src="scripts/main.js"></script>
+
+</body>
+</html>

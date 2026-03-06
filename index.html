@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Art Portfolio</title>
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fraunces:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/main.css" />
+</head>
+
+<body class="site-body text-slate-800">
+  <div class="page-glow" aria-hidden="true"></div>
+  <div id="heartsContainer" class="hearts-layer" aria-hidden="true"></div>
+
+  <header class="sticky top-0 z-50 backdrop-blur-xl border-b border-white/40 bg-white/75">
+    <nav class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+      <a href="character.html" class="inline-flex items-center brand-pulse" aria-label="Open character page">
+        <img src="images/logo_index2.png" alt="MyArt logo" class="h-12 w-auto object-contain" />
+      </a>
+
+      <ul class="hidden md:flex gap-7 font-semibold tracking-wide text-sm uppercase">
+        <li><a href="#home" class="nav-link">Home</a></li>
+        <li><a href="#gallery" class="nav-link">Portfolio</a></li>
+        <li><a href="#commissions" class="nav-link">Commissions</a></li>
+        <li><a href="#about" class="nav-link">Email Me</a></li>
+      </ul>
+
+      <button id="menuBtn" class="md:hidden text-2xl leading-none p-2 rounded-md border border-slate-300/80" aria-label="Toggle menu">
+        &#9776;
+      </button>
+    </nav>
+
+    <div id="mobileMenu" class="hidden md:hidden bg-white/95 border-t border-slate-200">
+      <a href="#home" class="block px-4 py-3 mobile-link">Home</a>
+      <a href="#gallery" class="block px-4 py-3 mobile-link">Portfolio</a>
+      <a href="#commissions" class="block px-4 py-3 mobile-link">Commissions</a>
+      <a href="#about" class="block px-4 py-3 mobile-link">Email Me</a>
+    </div>
+  </header>
+
+  <section
+    id="home"
+    class="hero-fullbleed relative overflow-visible"
+    style="background-image: url('images/hero-image.jpg'); background-size: cover; background-position: center top; min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end;"
+  >
+    <div class="hero-overlay" aria-hidden="true"></div>
+    <div class="hero-gridlines" aria-hidden="true"></div>
+
+    <div class="hero-content relative z-10 px-8 md:px-14 pb-20 md:pb-24 max-w-2xl">
+      <p class="hero-counter mb-4">
+        <span class="counter-current">01</span><span class="counter-sep">/</span><span class="counter-total">04</span>
+      </p>
+      <h2 class="hero-display-title mb-6">
+        Mirlian's<br/>Creative<br/>Space.
+      </h2>
+      <p class="hero-desc mb-6">
+        Digital illustrations &bull; Character art &bull; Personal style.<br/>
+        Each piece is crafted with curiosity and heart.
+        <span class="beat-heart">&hearts;</span>
+      </p>
+      <img src="images/logo_index2.png" alt="MyArt logo" class="hero-logo mb-5" />
+      <a href="#gallery" class="hero-read-more-btn animated-btn">View Portfolio</a>
+    </div>
+
+    <div class="hero-meta-bar relative z-10">
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">TikTok</span>
+        <span class="hero-meta-value">@mirlian.does.art</span>
+      </div>
+      <div class="hero-meta-divider"></div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Art By</span>
+        <span class="hero-meta-value">Mirlian</span>
+      </div>
+      <div class="hero-meta-divider"></div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Commissions</span>
+        <a href="https://vgen.co/MirlianJay" target="_blank" rel="noreferrer" class="hero-meta-value hero-meta-link">VGen &rarr;</a>
+      </div>
+      <div class="hero-slide-progress ml-auto hidden md:flex items-center gap-2">
+        <span class="hero-slide-num">01</span>
+        <div class="hero-progress-track"><div class="hero-progress-fill"></div></div>
+        <span class="hero-slide-num">02</span>
+        <span class="hero-slide-num muted">03</span>
+        <span class="hero-slide-num muted">04</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery" class="max-w-6xl mx-auto py-20 px-4">
+    <div class="section-head text-center mb-10 relative">
+      <p class="section-kicker">Collection</p>
+      <h2 class="section-title">Selected Works</h2>
+    </div>
+
+    <div class="surface-panel p-5 md:p-6 rounded-2xl animated-card-border">
+      <div class="gallery-carousel" aria-label="Artwork carousel">
+        <div class="carousel-viewport" id="galleryCarouselViewport">
+          <div class="carousel-track" id="galleryCarouselTrack">
+            <figure class="carousel-slide">
+              <img src="images/art1.jfif" class="carousel-image" alt="Art 1" />
+            </figure>
+            <figure class="carousel-slide">
+              <img src="images/art2.jfif" class="carousel-image" alt="Art 2" />
+            </figure>
+            <figure class="carousel-slide">
+              <img src="images/art3.jfif" class="carousel-image" alt="Art 3" />
+            </figure>
+            <figure class="carousel-slide">
+              <img src="images/art4.jfif" class="carousel-image" alt="Art 4" />
+            </figure>
+            <figure class="carousel-slide">
+              <img src="images/art5.jfif" class="carousel-image" alt="Art 5" />
+            </figure>
+            <figure class="carousel-slide">
+              <img src="images/art6.jfif" class="carousel-image" alt="Art 6" />
+            </figure>
+            <figure class="carousel-slide">
+              <img src="images/art7.jfif" class="carousel-image" alt="Art 7" />
+            </figure>
+            <figure class="carousel-slide">
+              <img src="images/art8.jfif" class="carousel-image" alt="Art 8" />
+            </figure>
+            <figure class="carousel-slide">
+              <img src="images/art9.jfif" class="carousel-image" alt="Art 9" />
+            </figure>
+          </div>
+        </div>
+
+        <div class="carousel-controls">
+          <button id="prevCarouselBtn" class="nav-btn" type="button" aria-label="Previous artwork">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+          </button>
+          <p id="carouselCounter" class="carousel-counter">1 / 9</p>
+          <button id="nextCarouselBtn" class="nav-btn" type="button" aria-label="Next artwork">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div id="carouselDots" class="carousel-dots" aria-label="Choose artwork slide"></div>
+        <p class="text-center text-slate-600 mt-4 text-sm">Swipe or use keyboard arrows</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="py-20 px-4">
+    <div class="max-w-4xl mx-auto text-center surface-panel p-8 md:p-12 rounded-2xl animated-card-border">
+      <img
+        src="images/profile.jfif"
+        alt="Artist"
+        class="mx-auto rounded-full w-28 h-28 md:w-32 md:h-32 mb-5 object-cover profile-img"
+      />
+      <h2 class="section-title mb-5">Email Me</h2>
+
+      <p class="text-base md:text-lg text-slate-700 mb-8 leading-relaxed max-w-3xl mx-auto">
+        If you want to ask about commissions, collabs, or anything about my art, email me directly.
+        I usually reply as soon as I can.
+        <span class="signature-line">Let us create something beautiful together.</span>
+      </p>
+
+      <div id="commissions" class="max-w-2xl mx-auto text-left mb-8">
+        <h3 class="text-2xl font-bold text-center mb-3">Commission Me</h3>
+        <p class="text-center text-slate-700 mb-5">
+          Fill out this form and your email app will open with your commission details ready to send.
+        </p>
+
+        <form id="commissionForm" class="space-y-4">
+          <input
+            name="name"
+            type="text"
+            placeholder="Your Name"
+            class="w-full border border-slate-300 rounded px-4 py-2"
+            required
+          />
+          <input
+            name="email"
+            type="email"
+            placeholder="Your Email"
+            class="w-full border border-slate-300 rounded px-4 py-2"
+            required
+          />
+          <textarea
+            name="details"
+            placeholder="Describe your commission..."
+            rows="4"
+            class="w-full border border-slate-300 rounded px-4 py-2"
+            required
+          ></textarea>
+          <button type="submit" class="social-btn light w-full animated-btn">
+            Submit Commission Request
+          </button>
+          <p id="commissionStatus" class="text-sm text-slate-600 text-center" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a
+          href="https://www.tiktok.com/@mirlian.does.art?_r=1&amp;_t=ZS-92qVh6FIKzV"
+          target="_blank"
+          class="social-btn dark"
+          rel="noreferrer"
+        >
+          TikTok
+        </a>
+        <a
+          href="https://vgen.co/MirlianJay"
+          target="_blank"
+          class="social-btn light"
+          rel="noreferrer"
+        >
+          VGen
+        </a>
+      </div>
+
+      <div class="mt-7">
+        <p class="text-slate-600">Business inquiries</p>
+        <a href="mailto:azuradoesart@gmail.com" class="email-link">azuradoesart@gmail.com</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-slate-900 text-slate-100 py-6">
+    <div class="max-w-6xl mx-auto text-center px-4">
+      <p>&copy; 2026 My Art Portfolio. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <button id="chatToggleBtn" class="chat-toggle-btn animated-btn" aria-label="Open chat assistant">Chat</button>
+
+  <section id="chatWidget" class="chat-widget hidden" aria-label="Portfolio assistant">
+    <header class="chat-header">
+      <div>
+        <h3 class="chat-title">Art Assistant</h3>
+        <p class="chat-subtitle">Ask about commissions, style, and portfolio work.</p>
+      </div>
+      <button id="chatCloseBtn" type="button" class="chat-icon-btn" aria-label="Close chat">&times;</button>
+    </header>
+    <div id="chatMessages" class="chat-messages" role="log" aria-live="polite"></div>
+    <form id="chatForm" class="chat-form">
+      <textarea
+        id="chatInput"
+        class="chat-input"
+        rows="2"
+        placeholder="Type your message..."
+        required
+      ></textarea>
+      <div class="chat-actions">
+        <button id="chatSendBtn" type="submit" class="chat-send-btn">Send</button>
+      </div>
+      <p class="chat-note">Edit website AI details in <code>data/site-knowledge.json</code>.</p>
+    </form>
+  </section>
+
+  <script src="scripts/main.js"></script>
+</body>
+</html>
