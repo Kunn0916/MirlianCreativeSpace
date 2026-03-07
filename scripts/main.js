@@ -12,7 +12,7 @@ const SETTINGS = {
     model: "gemini-2.5-flash",
     baseSystemPrompt: "You are the portfolio assistant for Yuna's art portfolio. Be brief, warm, and helpful. IMPORTANT: Always detect and match the language of the user's message. If the user writes in Filipino, reply in Filipino. If they write in Japanese, reply in Japanese. If they write in Spanish, reply in Spanish. Always respond in whatever language the user is using, not just English.",
     useDirectGeminiFromBrowser: true,
-    directApiKey: "AIzaSyAb3ANSygK-vn5a2CtB94JcQPiNBCQ1Bc4"
+    directApiKey: "AIzaSyDjFNIYO8vlE74vjBADp03Qfpy38MRaguc"
   }
 };
 
