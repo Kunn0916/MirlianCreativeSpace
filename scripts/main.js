@@ -6,20 +6,13 @@ const SETTINGS = {
     swipeThreshold: 50,
     heartIntervalMs: 850
   },
-  knowledgePath: "data/site-knowledge.json",
-  chat: {
-    endpoint: "/api/chat",
-    model: "gemini-2.5-flash",
-    baseSystemPrompt: "You are the portfolio assistant for Yuna's art portfolio. Be brief, warm, and helpful. IMPORTANT: Always detect and match the language of the user's message. If the user writes in Filipino, reply in Filipino. If they write in Japanese, reply in Japanese. If they write in Spanish, reply in Spanish. Always respond in whatever language the user is using, not just English.",
-    useDirectGeminiFromBrowser: true,
-    directApiKey: "AIzaSyDjFNIYO8vlE74vjBADp03Qfpy38MRaguc"
-  }
+  knowledgePath: "data/site-knowledge.json"
 };
 
 const FALLBACK_SITE_KNOWLEDGE = {
-  artist_name: "Yuna",
+  artist_name: "Mirlian",
   brand_name: "My Art Portfolio",
-  bio: "Yuna is a digital artist exploring illustration, animation, and 3D modeling while sharing progress publicly.",
+  bio: "Mirlian is a digital artist exploring illustration, animation, and 3D modeling while sharing progress publicly.",
   contact_email: "azuradoesart@gmail.com",
   social_links: {
     tiktok: "https://www.tiktok.com/@mirlian.does.art?_r=1&_t=ZS-92qVh6FIKzV",
@@ -142,7 +135,7 @@ if (!reduceMotion) {
 }
 
 // =========================
-// Chat + Website Knowledge
+// FAQ + Website Knowledge
 // =========================
 const chatToggleBtn = document.getElementById("chatToggleBtn");
 const chatCloseBtn = document.getElementById("chatCloseBtn");
@@ -150,11 +143,9 @@ const chatWidget = document.getElementById("chatWidget");
 const chatMessages = document.getElementById("chatMessages");
 const chatForm = document.getElementById("chatForm");
 const chatInput = document.getElementById("chatInput");
-const chatSendBtn = document.getElementById("chatSendBtn");
 const commissionForm = document.getElementById("commissionForm");
 const commissionStatus = document.getElementById("commissionStatus");
 
-let chatBusy = false;
 let siteKnowledge = FALLBACK_SITE_KNOWLEDGE;
 
 function appendChatMessage(role, text) {
@@ -168,7 +159,7 @@ function appendChatMessage(role, text) {
 
 function ensureIntroMessage() {
   if (!chatMessages || chatMessages.childElementCount > 0) return;
-  appendChatMessage("assistant", "Hi! I can answer questions about the artist, portfolio, and commissions.");
+  appendChatMessage("assistant", "Browse the quick FAQs below or search by keyword for commissions, contact details, and portfolio info.");
 }
 
 function toggleChat(show) {
@@ -196,81 +187,99 @@ async function loadSiteKnowledge() {
   }
 }
 
-function buildSystemPrompt() {
-  const serializedKnowledge = JSON.stringify(siteKnowledge);
-  return (
-    SETTINGS.chat.baseSystemPrompt +
-    " Answer using only these website details when relevant: " +
-    serializedKnowledge +
-    " If info is missing, say you are not sure and suggest contacting " +
-    (siteKnowledge.contact_email || "the artist by email") +
-    "."
-  );
+function getFaqEntries() {
+  return Array.isArray(siteKnowledge.faq) ? siteKnowledge.faq : FALLBACK_SITE_KNOWLEDGE.faq;
 }
 
-async function extractErrorMessage(res) {
-  try {
-    const data = await res.json();
-    return data?.error?.message || data?.message || JSON.stringify(data);
-  } catch (_) {
-    return await res.text();
+function getSuggestedQuestions() {
+  return getFaqEntries().slice(0, 4).map((entry) => entry.question);
+}
+
+function normalizeText(text) {
+  return String(text || "").toLowerCase().replace(/[^\w\s@.-]/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function buildSearchCorpus() {
+  const sections = [
+    siteKnowledge.artist_name,
+    siteKnowledge.brand_name,
+    siteKnowledge.bio,
+    siteKnowledge.tagline,
+    siteKnowledge.contact_email,
+    siteKnowledge.commission_status,
+    Array.isArray(siteKnowledge.services) ? siteKnowledge.services.join(" ") : "",
+    siteKnowledge.social_links ? Object.values(siteKnowledge.social_links).join(" ") : ""
+  ];
+
+  return normalizeText(sections.join(" "));
+}
+
+function findFaqAnswer(userText) {
+  const query = normalizeText(userText);
+  const faqEntries = getFaqEntries();
+
+  if (!query) return null;
+
+  const directMatch = faqEntries.find((entry) => normalizeText(entry.question).includes(query) || query.includes(normalizeText(entry.question)));
+  if (directMatch) return directMatch.answer;
+
+  const queryTerms = query.split(" ").filter((term) => term.length > 2);
+  let bestEntry = null;
+  let bestScore = 0;
+
+  faqEntries.forEach((entry) => {
+    const haystack = normalizeText(entry.question + " " + entry.answer);
+    const score = queryTerms.reduce((sum, term) => sum + (haystack.includes(term) ? 1 : 0), 0);
+    if (score > bestScore) {
+      bestScore = score;
+      bestEntry = entry;
+    }
+  });
+
+  if (bestEntry && bestScore > 0) return bestEntry.answer;
+
+  const siteCorpus = buildSearchCorpus();
+  if (queryTerms.some((term) => siteCorpus.includes(term))) {
+    if (query.includes("contact") || query.includes("email") || query.includes("reach")) {
+      return "You can contact Mirlian at " + (siteKnowledge.contact_email || "the listed email on this page") + ".";
+    }
+
+    if (query.includes("commission")) {
+      return "Commission status: " + (siteKnowledge.commission_status || "Please contact the artist for current availability") + ". You can also message through VGen.";
+    }
+
+    if (query.includes("service") || query.includes("offer")) {
+      return "Available services: " + ((siteKnowledge.services || []).join(", ") || "Digital illustrations and character art") + ".";
+    }
   }
+
+  return "I do not have a stored FAQ for that yet. Please email " + (siteKnowledge.contact_email || "the artist") + " for custom questions.";
 }
 
-async function fetchAssistantReply(userText) {
-  const systemPrompt = buildSystemPrompt();
+function renderSuggestedQuestions() {
+  if (!chatMessages) return;
 
-  if (!SETTINGS.chat.useDirectGeminiFromBrowser) {
-    const res = await fetch(SETTINGS.chat.endpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        message: userText,
-        model: SETTINGS.chat.model,
-        systemPrompt
-      })
+  const existing = chatMessages.querySelector(".faq-suggestions");
+  existing?.remove();
+
+  const wrap = document.createElement("div");
+  wrap.className = "faq-suggestions";
+
+  getSuggestedQuestions().forEach((question) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "faq-chip";
+    button.textContent = question;
+    button.addEventListener("click", () => {
+      if (!chatInput) return;
+      chatInput.value = question;
+      chatForm?.requestSubmit();
     });
+    wrap.appendChild(button);
+  });
 
-    if (!res.ok) {
-      const detail = await extractErrorMessage(res);
-      throw new Error("Proxy error " + res.status + ": " + detail);
-    }
-    const data = await res.json();
-    return data.reply || "No response returned by server.";
-  }
-
-  if (!SETTINGS.chat.directApiKey || SETTINGS.chat.directApiKey.includes("PASTE_YOUR_GEMINI_API_KEY_HERE")) {
-    throw new Error("Set SETTINGS.chat.directApiKey in scripts/main.js.");
-  }
-
-  if (window.location.protocol === "file:") {
-    throw new Error("Open this site via localhost, not file://. Example: python -m http.server 5500");
-  }
-
-  const modelName = SETTINGS.chat.model;
-  const res = await fetch(
-    "https://generativelanguage.googleapis.com/v1beta/models/" +
-      modelName +
-      ":generateContent?key=" +
-      encodeURIComponent(SETTINGS.chat.directApiKey),
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        systemInstruction: { parts: [{ text: systemPrompt }] },
-        contents: [{ role: "user", parts: [{ text: userText }] }]
-      })
-    }
-  );
-
-  if (!res.ok) {
-    const detail = await extractErrorMessage(res);
-    throw new Error("Gemini error " + res.status + " (" + modelName + "): " + detail);
-  }
-
-  const data = await res.json();
-  const text = data?.candidates?.[0]?.content?.parts?.map((p) => p.text || "").join("").trim();
-  return text || "No text returned by API.";
+  chatMessages.appendChild(wrap);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
 function initChat() {
@@ -283,33 +292,21 @@ function initChat() {
   chatInput?.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      if (!chatBusy) chatForm?.requestSubmit();
+      chatForm?.requestSubmit();
     }
   });
 
-  chatForm?.addEventListener("submit", async (e) => {
+  chatForm?.addEventListener("submit", (e) => {
     e.preventDefault();
-    if (chatBusy || !chatInput || !chatSendBtn) return;
+    if (!chatInput) return;
 
     const userText = chatInput.value.trim();
     if (!userText) return;
 
     appendChatMessage("user", userText);
     chatInput.value = "";
-    chatBusy = true;
-    chatSendBtn.disabled = true;
-    chatSendBtn.textContent = "Sending...";
-
-    try {
-      const reply = await fetchAssistantReply(userText);
-      appendChatMessage("assistant", reply);
-    } catch (err) {
-      appendChatMessage("assistant", "Chat error: " + err.message);
-    } finally {
-      chatBusy = false;
-      chatSendBtn.disabled = false;
-      chatSendBtn.textContent = "Send";
-    }
+    appendChatMessage("assistant", findFaqAnswer(userText));
+    renderSuggestedQuestions();
   });
 }
 
@@ -350,7 +347,8 @@ function initCommissionForm() {
 // =========================
 (async function initApp() {
   initCarousel();
-  initChat();
-  initCommissionForm();
   await loadSiteKnowledge();
+  initChat();
+  renderSuggestedQuestions();
+  initCommissionForm();
 })();
