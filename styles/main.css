@@ -775,6 +775,32 @@
       font-size: 0.68rem;
     }
 
+    .faq-suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.1rem;
+    }
+
+    .faq-chip {
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      background: #fff7fb;
+      color: #9d174d;
+      border-radius: 999px;
+      padding: 0.45rem 0.7rem;
+      font-size: 0.76rem;
+      font-weight: 700;
+      line-height: 1.2;
+      text-align: left;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .faq-chip:hover {
+      transform: translateY(-1px);
+      background: #ffe8f3;
+      border-color: rgba(236, 72, 153, 0.35);
+    }
+
     :focus-visible {
       outline: 3px solid rgba(63, 103, 216, 0.35);
       outline-offset: 2px;
