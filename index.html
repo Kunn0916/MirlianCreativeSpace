@@ -233,13 +233,13 @@
     </div>
   </footer>
 
-  <button id="chatToggleBtn" class="chat-toggle-btn animated-btn" aria-label="Open chat assistant">Chat</button>
+  <button id="chatToggleBtn" class="chat-toggle-btn animated-btn" aria-label="Open FAQ panel">FAQs</button>
 
-  <section id="chatWidget" class="chat-widget hidden" aria-label="Portfolio assistant">
+  <section id="chatWidget" class="chat-widget hidden" aria-label="Portfolio FAQs">
     <header class="chat-header">
       <div>
-        <h3 class="chat-title">Art Assistant</h3>
-        <p class="chat-subtitle">Ask about commissions, style, and portfolio work.</p>
+        <h3 class="chat-title">Quick FAQs</h3>
+        <p class="chat-subtitle">Search the saved answers about commissions, contact, and portfolio work.</p>
       </div>
       <button id="chatCloseBtn" type="button" class="chat-icon-btn" aria-label="Close chat">&times;</button>
     </header>
@@ -249,13 +249,13 @@
         id="chatInput"
         class="chat-input"
         rows="2"
-        placeholder="Type your message..."
+        placeholder="Search FAQs or type a question..."
         required
       ></textarea>
       <div class="chat-actions">
-        <button id="chatSendBtn" type="submit" class="chat-send-btn">Send</button>
+        <button type="submit" class="chat-send-btn">Search</button>
       </div>
-      <p class="chat-note">Edit website AI details in <code>data/site-knowledge.json</code>.</p>
+      <p class="chat-note">Edit saved FAQ entries in <code>data/site-knowledge.json</code>. No API is used.</p>
     </form>
   </section>
 
